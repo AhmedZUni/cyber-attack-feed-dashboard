@@ -4,15 +4,14 @@ from datetime import datetime
 import plotly.express as px
 
 # --- Real world cyber attacks data: Oct 20, 2025 onward ---
-sample_data = [
-    {
-        "date": "2025-10-20",
-        "attack_method": "Russian Nation-State Hacking",
-        "impact_target": "UK Ministry of Defence",
-        "attacker_group": "Russian hackers",
-        "estimated_cost": 300000,
-        "remediation": "Patch security gaps, incident review, coordinated intelligence and notification"
-    },
+sampsample_data = [
+    # Existing incidents...
+
+    {"date": "2025-10-01", "attack_method": "Social engineering→data breach", "impact_target": "WestJet", "attacker_group": "Unknown", "estimated_cost": 250000, "remediation": "Review access protocols, client notification"},
+    {"date": "2025-10-02", "attack_method": "Third-party breach (cloud CRM)", "impact_target": "Allianz Life Insurance", "attacker_group": "Unknown", "estimated_cost": 900000, "remediation": "Vendor controls, security audit"},
+    {"date": "2025-10-02", "attack_method": "Ransomware (data theft & extortion)", "impact_target": "Motility Software Solutions", "attacker_group": "PEAR group", "estimated_cost": 450000, "remediation": "Restore backups, law enforcement"},
+    {"date": "2025-10-07", "attack_method": "Email Account Compromise", "impact_target": "Williams & Connolly", "attacker_group": "Unknown", "estimated_cost": 90000, "remediation": "Change credentials, enhance email security"},
+    {"date": "2025-10-13", "attack_method": "Vulnerability Exploitation (Oracle EBS)", "impact_target": "Harvard University", "attacker_group": "Unknown", "estimated_cost": 130000, "remediation": "Patch Oracle, audit systems"},,
     {
         "date": "2025-10-20",
         "attack_method": "F5 BIG-IP Exploit",
