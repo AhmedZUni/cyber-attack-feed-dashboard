@@ -3,15 +3,16 @@ import pandas as pd
 from datetime import datetime
 import plotly.express as px
 
-# --- Real world cyber attacks data: Oct 20, 2025 onward ---
-sampsample_data = [
-    # Existing incidents...
-
-    {"date": "2025-10-01", "attack_method": "Social engineering→data breach", "impact_target": "WestJet", "attacker_group": "Unknown", "estimated_cost": 250000, "remediation": "Review access protocols, client notification"},
-    {"date": "2025-10-02", "attack_method": "Third-party breach (cloud CRM)", "impact_target": "Allianz Life Insurance", "attacker_group": "Unknown", "estimated_cost": 900000, "remediation": "Vendor controls, security audit"},
-    {"date": "2025-10-02", "attack_method": "Ransomware (data theft & extortion)", "impact_target": "Motility Software Solutions", "attacker_group": "PEAR group", "estimated_cost": 450000, "remediation": "Restore backups, law enforcement"},
-    {"date": "2025-10-07", "attack_method": "Email Account Compromise", "impact_target": "Williams & Connolly", "attacker_group": "Unknown", "estimated_cost": 90000, "remediation": "Change credentials, enhance email security"},
-    {"date": "2025-10-13", "attack_method": "Vulnerability Exploitation (Oracle EBS)", "impact_target": "Harvard University", "attacker_group": "Unknown", "estimated_cost": 130000, "remediation": "Patch Oracle, audit systems"},,
+# --- Expanded real cyber attacks data: Oct 20, 2025 onward ---
+sample_data = [
+    {
+        "date": "2025-10-20",
+        "attack_method": "Russian Nation-State Hacking",
+        "impact_target": "UK Ministry of Defence",
+        "attacker_group": "Russian hackers",
+        "estimated_cost": 300000,
+        "remediation": "Patch security gaps, incident review, coordinated intelligence and notification"
+    },
     {
         "date": "2025-10-20",
         "attack_method": "F5 BIG-IP Exploit",
@@ -53,6 +54,14 @@ sampsample_data = [
         "remediation": "Contact affected clients, digital forensics, legal update"
     },
     {
+        "date": "2025-10-24",
+        "attack_method": "Supply Chain Attack",
+        "impact_target": "Harvard University (Oracle EBS)",
+        "attacker_group": "Unknown",
+        "estimated_cost": 130000,
+        "remediation": "Patch Oracle EBS, audit systems, notify clients"
+    },
+    {
         "date": "2025-10-27",
         "attack_method": "Alleged Data Leak",
         "impact_target": "GCash (Philippines)",
@@ -69,12 +78,44 @@ sampsample_data = [
         "remediation": "National incident notification, strict access review"
     },
     {
+        "date": "2025-11-02",
+        "attack_method": "Ransomware",
+        "impact_target": "Motility Software Solutions",
+        "attacker_group": "PEAR group",
+        "estimated_cost": 450000,
+        "remediation": "Restore backups, involve law enforcement"
+    },
+    {
+        "date": "2025-11-04",
+        "attack_method": "Business Email Compromise",
+        "impact_target": "Williams & Connolly",
+        "attacker_group": "Unknown",
+        "estimated_cost": 90000,
+        "remediation": "Change credentials, enhance email security"
+    },
+    {
+        "date": "2025-11-05",
+        "attack_method": "Data Breach",
+        "impact_target": "WestJet",
+        "attacker_group": "Unknown",
+        "estimated_cost": 250000,
+        "remediation": "Review access protocols, client notification"
+    },
+    {
         "date": "2025-11-13",
         "attack_method": "Third-party Cloud Breach",
         "impact_target": "Allianz Life Insurance (USA)",
         "attacker_group": "Unknown (CRM compromise)",
         "estimated_cost": 900000,
         "remediation": "Vendor controls, cloud security audit, affected client contact"
+    },
+    {
+        "date": "2025-11-14",
+        "attack_method": "DDoS",
+        "impact_target": "E-Shop",
+        "attacker_group": "Unknown",
+        "estimated_cost": 60000,
+        "remediation": "Scale resources, block offending IPs"
     },
     {
         "date": "2025-11-15",
