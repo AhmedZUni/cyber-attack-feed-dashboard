@@ -5,15 +5,89 @@ import plotly.express as px
 
 # --- Sample Data ---
 sample_data = [
-    # ... (existing current entries here)
     {
         "date": "2025-10-20",
-        "attack_method": "SQL Injection",
-        "impact_target": "RetailMart",
-        "attacker_group": "CyberOwls",
-        "estimated_cost": 150000,
-        "remediation": "Patch vulnerability, review logs, notify affected customers"
+        "attack_method": "Russian Nation-State Hacking",
+        "impact_target": "UK Ministry of Defence",
+        "attacker_group": "Russian hackers",
+        "estimated_cost": 300000,  # Catastrophic operational cost, classified material loss
+        "remediation": "Patch security gaps, incident review, coordinated intelligence and notification"
     },
+    {
+        "date": "2025-10-20",
+        "attack_method": "F5 BIG-IP Exploit",
+        "impact_target": "Global Enterprises (Financial/Cloud)",
+        "attacker_group": "Unknown",
+        "estimated_cost": 120000,
+        "remediation": "Urgent update of all F5 appliances, threat hunting, CISA guidance"
+    },
+    {
+        "date": "2025-10-20",
+        "attack_method": "Credential Compromise",
+        "impact_target": "Prosper Marketplace (USA, Fintech)",
+        "attacker_group": "Unknown",
+        "estimated_cost": 17600000,
+        "remediation": "Credential reset, user notification, IAM audit"
+    },
+    {
+        "date": "2025-10-21",
+        "attack_method": "SIM Swapping & Account Takeover",
+        "impact_target": "Dodo & iPrimus (Australia, Telecom)",
+        "attacker_group": "Unknown cyber-criminals",
+        "estimated_cost": 85000,
+        "remediation": "Notification to affected users, SIM protection steps, forensic investigation"
+    },
+    {
+        "date": "2025-10-21",
+        "attack_method": "Cloud Misconfiguration (Data Exposure)",
+        "impact_target": "Dukaan (India, eCommerce)",
+        "attacker_group": "Unknown",
+        "estimated_cost": 5000000,
+        "remediation": "Secure cloud streams, review exposure, notify parties"
+    },
+    {
+        "date": "2025-10-23",
+        "attack_method": "Data Breach & Leak",
+        "impact_target": "Toys “R” Us Canada",
+        "attacker_group": "Unknown",
+        "estimated_cost": 90000,
+        "remediation": "Contact affected clients, digital forensics, legal update"
+    },
+    {
+        "date": "2025-10-27",
+        "attack_method": "Alleged Data Leak",
+        "impact_target": "GCash (Philippines)",
+        "attacker_group": "Dark Web actors",
+        "estimated_cost": 150000,
+        "remediation": "Enhance endpoint security, customer caution campaign"
+    },
+    {
+        "date": "2025-10-29",
+        "attack_method": "Cyber Espionage",
+        "impact_target": "Ribbon Communications (USA, Telecom)",
+        "attacker_group": "Nation-state APT",
+        "estimated_cost": 470000,
+        "remediation": "National incident notification, strict access review"
+    },
+    {
+        "date": "2025-11-13",
+        "attack_method": "Third-party Cloud Breach",
+        "impact_target": "Allianz Life Insurance (USA)",
+        "attacker_group": "Unknown (CRM compromise)",
+        "estimated_cost": 900000,
+        "remediation": "Vendor controls, cloud security audit, affected client contact"
+    },
+    {
+        "date": "2025-11-15",
+        "attack_method": "Ransomware",
+        "impact_target": "Michigan City, Indiana",
+        "attacker_group": "Obscura Ransomware",
+        "estimated_cost": 750000,
+        "remediation": "Systems separation, backup restoration, law enforcement"
+    }
+    # Add more as more attacks are reported!
+]
+,
     {
         "date": "2025-10-20",
         "attack_method": "Phishing",
