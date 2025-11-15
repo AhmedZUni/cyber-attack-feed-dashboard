@@ -3,147 +3,48 @@ import pandas as pd
 from datetime import datetime
 import plotly.express as px
 
-# --- Expanded real cyber attacks data: Oct 20, 2025 onward ---
-sample_data = [
-    {
-        "date": "2025-10-20",
-        "attack_method": "Russian Nation-State Hacking",
-        "impact_target": "UK Ministry of Defence",
-        "attacker_group": "Russian hackers",
-        "estimated_cost": 300000,
-        "remediation": "Patch security gaps, incident review, coordinated intelligence and notification"
-    },
-    {
-        "date": "2025-10-20",
-        "attack_method": "F5 BIG-IP Exploit",
-        "impact_target": "Global Enterprises (Financial/Cloud)",
-        "attacker_group": "Unknown",
-        "estimated_cost": 120000,
-        "remediation": "Urgent update of all F5 appliances, threat hunting, CISA guidance"
-    },
-    {
-        "date": "2025-10-20",
-        "attack_method": "Credential Compromise",
-        "impact_target": "Prosper Marketplace (USA, Fintech)",
-        "attacker_group": "Unknown",
-        "estimated_cost": 17600000,
-        "remediation": "Credential reset, user notification, IAM audit"
-    },
-    {
-        "date": "2025-10-21",
-        "attack_method": "SIM Swapping & Account Takeover",
-        "impact_target": "Dodo & iPrimus (Australia, Telecom)",
-        "attacker_group": "Unknown cyber-criminals",
-        "estimated_cost": 85000,
-        "remediation": "Notification to affected users, SIM protection steps, forensic investigation"
-    },
-    {
-        "date": "2025-10-21",
-        "attack_method": "Cloud Misconfiguration (Data Exposure)",
-        "impact_target": "Dukaan (India, eCommerce)",
-        "attacker_group": "Unknown",
-        "estimated_cost": 5000000,
-        "remediation": "Secure cloud streams, review exposure, notify parties"
-    },
-    {
-        "date": "2025-10-23",
-        "attack_method": "Data Breach & Leak",
-        "impact_target": "Toys “R” Us Canada",
-        "attacker_group": "Unknown",
-        "estimated_cost": 90000,
-        "remediation": "Contact affected clients, digital forensics, legal update"
-    },
-    {
-        "date": "2025-10-24",
-        "attack_method": "Supply Chain Attack",
-        "impact_target": "Harvard University (Oracle EBS)",
-        "attacker_group": "Unknown",
-        "estimated_cost": 130000,
-        "remediation": "Patch Oracle EBS, audit systems, notify clients"
-    },
-    {
-        "date": "2025-10-27",
-        "attack_method": "Alleged Data Leak",
-        "impact_target": "GCash (Philippines)",
-        "attacker_group": "Dark Web actors",
-        "estimated_cost": 150000,
-        "remediation": "Enhance endpoint security, customer caution campaign"
-    },
-    {
-        "date": "2025-10-29",
-        "attack_method": "Cyber Espionage",
-        "impact_target": "Ribbon Communications (USA, Telecom)",
-        "attacker_group": "Nation-state APT",
-        "estimated_cost": 470000,
-        "remediation": "National incident notification, strict access review"
-    },
-    {
-        "date": "2025-11-02",
-        "attack_method": "Ransomware",
-        "impact_target": "Motility Software Solutions",
-        "attacker_group": "PEAR group",
-        "estimated_cost": 450000,
-        "remediation": "Restore backups, involve law enforcement"
-    },
-    {
-        "date": "2025-11-04",
-        "attack_method": "Business Email Compromise",
-        "impact_target": "Williams & Connolly",
-        "attacker_group": "Unknown",
-        "estimated_cost": 90000,
-        "remediation": "Change credentials, enhance email security"
-    },
-    {
-        "date": "2025-11-05",
-        "attack_method": "Data Breach",
-        "impact_target": "WestJet",
-        "attacker_group": "Unknown",
-        "estimated_cost": 250000,
-        "remediation": "Review access protocols, client notification"
-    },
-    {
-        "date": "2025-11-13",
-        "attack_method": "Third-party Cloud Breach",
-        "impact_target": "Allianz Life Insurance (USA)",
-        "attacker_group": "Unknown (CRM compromise)",
-        "estimated_cost": 900000,
-        "remediation": "Vendor controls, cloud security audit, affected client contact"
-    },
-    {
-        "date": "2025-11-14",
-        "attack_method": "DDoS",
-        "impact_target": "E-Shop",
-        "attacker_group": "Unknown",
-        "estimated_cost": 60000,
-        "remediation": "Scale resources, block offending IPs"
-    },
-    {
-        "date": "2025-11-15",
-        "attack_method": "Ransomware",
-        "impact_target": "Michigan City, Indiana",
-        "attacker_group": "Obscura Ransomware",
-        "estimated_cost": 750000,
-        "remediation": "Systems separation, backup restoration, law enforcement"
-    }
-]
+# ---- LIVE DATA SOURCE: Google Sheet (CSV) ----
+SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQrv8gnjuOaENz6YYG2VQUo5ULubTVRpYKCe9TsgqvPYYt2bnbbmJo2J7ZhBN5oKpSVrJIc9HYh48_o/pub?output=csv"
 
-df = pd.DataFrame(sample_data)
+@st.cache_data(ttl=300)  # Cache for 5 minutes
+def get_data():
+    try:
+        df = pd.read_csv(SHEET_URL)
+        # Basic normalization/cleaning
+        if 'date' in df.columns:
+            df['date'] = pd.to_datetime(df['date'], errors='coerce').dt.strftime('%Y-%m-%d')
+        if 'estimated_cost' in df.columns:
+            df['estimated_cost'] = pd.to_numeric(df['estimated_cost'], errors='coerce').fillna(0)
+        # Ensure all expected columns exist for dashboard
+        cols_needed = ['date','attack_method','impact_target','attacker_group','estimated_cost','remediation']
+        for col in cols_needed:
+            if col not in df.columns:
+                df[col] = ""
+        return df
+    except Exception as e:
+        st.error(f"Error loading data: {e}")
+        return pd.DataFrame(columns=['date','attack_method','impact_target','attacker_group','estimated_cost','remediation'])
 
-# --- PAGE DESIGN ---
+df = get_data()
+
+# ---- PAGE DESIGN ----
 st.set_page_config(page_title="Cyber Attack Feed Dashboard", layout="wide")
 st.markdown("<h1 style='color:#ff5858;'>🚨 Cyber Attack Feed Dashboard 🚨</h1>", unsafe_allow_html=True)
-st.markdown("> _Real-world global cyber incidents: trending attacks, impacted targets, losses, and more (from Oct 20, 2025 onwards)._")
+st.markdown("> _Live cyber incident dashboard: trending attacks, impacted targets, losses, and more (auto updates)._")
 
-# --- SIDEBAR FILTERS ---
+# ---- SIDEBAR FILTERS ----
 with st.sidebar:
     st.header("Filters")
-    method_list = list(df['attack_method'].unique())
+    method_list = list(df['attack_method'].dropna().unique())
     picked_method = st.multiselect("Attack Method", options=method_list)
-    target_list = list(df['impact_target'].unique())
+    target_list = list(df['impact_target'].dropna().unique())
     picked_target = st.text_input("Target Name (partial match ok)")
-    date_min = datetime.strptime(df['date'].min(), "%Y-%m-%d").date()
-    date_max = datetime.strptime(df['date'].max(), "%Y-%m-%d").date()
-    picked_date = st.date_input("Attack Date", value=None, min_value=date_min, max_value=date_max)
+    if not df.empty and df['date'].notna().any():
+        date_min = pd.to_datetime(df['date'], errors='coerce').min().date()
+        date_max = pd.to_datetime(df['date'], errors='coerce').max().date()
+        picked_date = st.date_input("Attack Date", value=None, min_value=date_min, max_value=date_max)
+    else:
+        picked_date = None
 
 mask = pd.Series(True, index=df.index)
 if picked_method:
@@ -155,14 +56,14 @@ if picked_date:
 
 filtered = df[mask].copy() if mask.any() else df.copy()
 
-# --- DASHBOARD TOP METRICS ---
+# ---- DASHBOARD TOP METRICS ----
 col1, col2, col3 = st.columns(3)
 col1.metric("Total Attacks", f"{filtered.shape[0]}")
 top_attack = filtered['attack_method'].mode()[0] if not filtered.empty else "N/A"
 col2.metric("Top Method", f"{top_attack}")
 col3.metric("Estimated Total Loss", f"${filtered['estimated_cost'].sum():,}")
 
-# --- BAR CHART: ATTACKS BY METHOD ---
+# ---- BAR CHART: ATTACKS BY METHOD ----
 st.subheader("🦠 Attack Methods Frequency")
 by_method = filtered.groupby('attack_method').size().reset_index(name='Count')
 if not by_method.empty:
@@ -177,9 +78,9 @@ if not by_method.empty:
 else:
     st.info("No data for chart.")
 
-# --- PIE CHART: ATTACK METHOD DISTRIBUTION ---
+# ---- PIE CHART: ATTACK METHOD DISTRIBUTION ----
 st.subheader("📊 Attack Method Share (by Financial Impact)")
-if not filtered.empty:
+if not filtered.empty and filtered['estimated_cost'].sum() > 0:
     fig2 = px.pie(
         filtered,
         names='attack_method',
@@ -191,7 +92,7 @@ if not filtered.empty:
 else:
     st.info("No data for pie chart.")
 
-# --- BAR CHART: TOTAL LOSS BY METHOD ---
+# ---- BAR CHART: TOTAL LOSS BY METHOD ----
 st.subheader("💸 Estimated Loss by Attack Method")
 loss_by_method = filtered.groupby('attack_method')['estimated_cost'].sum().reset_index()
 if not loss_by_method.empty:
@@ -206,7 +107,7 @@ if not loss_by_method.empty:
 else:
     st.info("No data for loss chart.")
 
-# --- TOP LOSSES TABLE ---
+# ---- TOP LOSSES TABLE ----
 st.subheader("⚠️ Highest Impacted Targets")
 top_losses = filtered.sort_values(by='estimated_cost', ascending=False)[
     ['date','impact_target','attack_method','attacker_group','estimated_cost','remediation']
@@ -219,7 +120,7 @@ try:
 except Exception:
     st.dataframe(top_losses, height=300)
 
-# --- SEARCH ACROSS TABLE ---
+# ---- SEARCH ACROSS TABLE ----
 st.subheader("🔍 Quick Search")
 search_text = st.text_input("Search for anything (target, attacker, remediation...):")
 if search_text.strip():
@@ -228,3 +129,4 @@ if search_text.strip():
     st.dataframe(filtered[mask2])
 
 st.caption("© 2025 Cyber Attack Feed Dashboard | Made with Streamlit")
+
