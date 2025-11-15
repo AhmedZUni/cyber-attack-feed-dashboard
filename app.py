@@ -5,13 +5,22 @@ import plotly.express as px
 
 # --- Sample Data ---
 sample_data = [
+    # ... (existing current entries here)
     {
-        "date": "2025-11-15",
+        "date": "2025-10-20",
+        "attack_method": "SQL Injection",
+        "impact_target": "RetailMart",
+        "attacker_group": "CyberOwls",
+        "estimated_cost": 150000,
+        "remediation": "Patch vulnerability, review logs, notify affected customers"
+    },
+    {
+        "date": "2025-10-20",
         "attack_method": "Phishing",
-        "impact_target": "BankCorp",
+        "impact_target": "EduNet",
         "attacker_group": "Unknown",
-        "estimated_cost": 400000,
-        "remediation": "Block sender, reset accounts, train staff"
+        "estimated_cost": 32000,
+        "remediation": "Staff training, alert IT, reset credentials"
     },
     {
         "date": "2025-11-15",
